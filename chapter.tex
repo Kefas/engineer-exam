@@ -257,3 +257,28 @@ class przyklad {
 
 Statyczne zmienne globalne i statyczne funkcje są całkowicie niewidoczne i niedostępne dla nikogo, poza plikiem, w którym zostały zdefiniowane.
 
+
+% 11 ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
+\textbf{W jaki sposób przekazywany jest parametr do będący tablicą do funkcji w języku C?}
+\begin{lstlisting}[language=c]
+int main(int argc, char* argv[]){
+   //...
+}
+\end{lstlisting}
+
+\subsection{Odpowiedź}
+\begin{itemize}
+\item Na stos jest przekazywany adres pierwszego elementu tablicy\\
+\end{itemize}
+
+\subsection{Wprowadzenie teoretyczne}
+Tablice są przekazywane do funkcji zawsze jako wskaźnik.\\
+Zwykłe zmienne oraz obiekty(struktury) mogą być przekazywane przez wartość lub przez referencję.
+\begin{itemize}
+\item Przez wartość - na stos trafia kopia danej zmiennej lub obiektu.\\
+Jeżeli wewnątrz struktury przekazywanej przez wartość znajduje się wskaźnik (lub tablica) to zostanie skopiowany wskaźnik. W skutek czego oryginał i kopia będą współdzielić jeden wskaźnik / tablicę. Zmieniając coś w kopii paramteru nie zmieniamy jego pierwowzoru.
+\item Przez referencję - na stos trafia kopia adresu przesyłanego paramteru. Zmieniając coś w referencji, zmieniamy oryginał.
+\end{itemize}
+
