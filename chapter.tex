@@ -64,11 +64,11 @@ strcmp(s1, s2);
 /*Returns 0 if s1 and s2 are the same; less than 0 if s1<s2; greater than 0 if s1>s2*/
 \end{lstlisting}
 
-% ---------------------------------------------------------------------------------------------------------------
+% 2 ---------------------------------------------------------------------------------------------------------------
 
 \section{IT1A\_W03,IT1A\_U03,IT1A\_U07}dassdas
 
-% ---------------------------------------------------------------------------------------------------------------
+% 3 ---------------------------------------------------------------------------------------------------------------
 
 \section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
 \textbf{W jaki sposób obliczyć długość tablicy w funkcji foo()?}
@@ -99,7 +99,76 @@ void foo(int t[]){
 }
 \end{lstlisting}
 
-% ---------------------------------------------------------------------------------------------------------------
+% 4 ---------------------------------------------------------------------------------------------------------------
+
+\section{Pytanie 4}dassdas
+
+% 5 ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07}
+\textbf{Zakładając, ze wielkość typu char to jeden bajt, short to dwa bajty, a double to osiem bajtów, jaka jest wartość wyrażenia sizeof(x), gdzie x jest zmienną poniższego typu strukturalnego, dla standardowych ustawień kompilatora 32-bitowego?}
+\begin{lstlisting}[language=c]
+struct {
+   char c;
+   short i;
+   double d;
+} x;
+\end{lstlisting}
+
+\subsection{Wstęp teoretyczny}
+W języku C każdy typ, oprócz char jest dopasowywany odpowiednio w przestrzeni adresowej.
+\begin{itemize}
+\item char może mieć początek na każdym bajcie w przestrzeni adresowej
+\item short musi mieć początek na adresie parzystym
+\item int lub float musi mieć początek na adresie podzielnym przez 4
+\item long musi mieć początek na adresie podzielnym przez 8
+\end{itemize}
+\textbf{Przykład ułożenia zmiennych w pamięci: }
+\begin{lstlisting}[language=c]
+char *p;
+char c;
+int x;
+\end{lstlisting}
+Przestrzeń dla p zajmuje 4 bajty, zaraz po nim mamy chara 1 bajtowego. Ale rozmieszczenie 4-bajtowego x wymaga dodania luki:
+
+\begin{lstlisting}[language=c]
+char *p;      /* 4 or 8 bytes */
+char c;       /* 1 byte */
+char pad[3];  /* 3 bytes */
+int x;        /* 4 bytes */
+\end{lstlisting}
+pad[3] reprezentuje fakt, że int musi zacząć się na adresie wielokrotności 4. \\\\
+\textbf{Pierwszy przykład dla struktur (maszyna 64-bitowa)}
+\begin{lstlisting}[language=c]
+struct foo1 {
+   char *p;     /* 8 bytes */
+   char c;      /* 1 byte
+   char pad[7]; /* 7 bytes */
+   long x;      /* 8 bytes */
+};
+\end{lstlisting}
+\textbf{Drugi przykład dla struktur}
+\begin{lstlisting}[language=c]
+struct MixedData  /* After compilation in 32-bit x86 machine */
+{
+    char Data1; /* 1 byte */
+    char Padding1[1]; /* 1 byte for the following 'short' to be aligned on a 2 byte boundary
+assuming that the address where structure begins is an even number */
+    short Data2; /* 2 bytes */
+    int Data3;  /* 4 bytes - largest structure member */
+    char Data4; /* 1 byte */
+    char Padding2[3]; /* 3 bytes to make total size of the structure 12 bytes */
+};
+\end{lstlisting}
+Wydawaćby się mogło, że sizeof(MixedData) = 9. Jednak nie - rozmiar struktury wynosi 12 bajtów! Do ostatniego elementu struktury dodany jest padding, dzięki któremu rozmiar struktury będzie wielokrotnością największego elementu struktury (tutaj int - 4 bajty). \\\\
+\textbf{Odpowiedź na pytanie} \\
+sizeof(x) = 1 + padding(1) + 2 + padding(4) + 8 = 16 
+
+% 6 ---------------------------------------------------------------------------------------------------------------
+
+\section{Pytanie 6}dassdas
+
+% 7 ---------------------------------------------------------------------------------------------------------------
 
 \section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
 \textbf{Przeanalizuj poniższą deklarację w języku C}
@@ -136,3 +205,7 @@ int main (){
    return 0;
 }
 \end{lstlisting}
+
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07}dassdas
+
+
