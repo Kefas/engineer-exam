@@ -207,5 +207,58 @@ int main (){
 \end{lstlisting}
 
 % 8 ---------------------------------------------------------------------------------------------------------------
-
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
 % 9 ---------------------------------------------------------------------------------------------------------------
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
+\textbf{Które stwierdzenia dotyczące modyfikatora static w języku C/C++ są poprawne}
+
+\begin{itemize}
+\item Zmienne lokalne
+
+Modyfikator static sprawia, że obiekt w danej funkcji jest umieszczany w tej samej pamięci, co zmienna globalna i nie jest usuwany wraz z zakończeniem funkcji.
+\begin{lstlisting}[language=c]
+int licznik()
+{
+  static int a;
+  a++;
+  return a;
+}
+
+int main()
+{
+  printf("Wywoluje funkcje licznik %d", licznik());  /* wypisze sie 1 */
+  printf("\n...drugi raz %d", licznik());     /* wypisze sie 2 */ 
+  //...
+}
+\end{lstlisting}
+
+Zmienne lokalne statyczne są automatycznie inicjalizowane wartością 0.
+
+\item Pola klasy
+
+Statyczne pole klasy jest tworzone tylko raz, w tym samym obszarze co zmienne globalne i cały czas pamięta swoją ostatnią wartość. Jest tworzone zanim zostanie utworzony pierwszy obiekt danej klasy, zazwyczaj - tworzone są już na samym starcie programu
+Pole statyczne klasy pamięta swoją wartość pomiędzy obiektami. Nie ważne z jakiego obiektu się do niego odwołasz, wartość będzie ta sama, wspólna dla wszystkich obiektów.
+
+\item Metody
+
+Metody statyczne - można wywołać bez podawania jakiegokolwiek obiektu. Ma to jednak swoją cenę - metody statyczne mają dostęp jedynie do innych zmiennych statycznych i metod statycznych tej klasy. 
+
+\begin{lstlisting}[language=c]
+class przyklad
+{
+  private:
+    int a, b;
+    static int c;
+  public:
+    static void metoda()
+    {
+      c=10; 
+      // b=10;     - blad! 'b' nie jest statyczne! nie ma do niego dostepu
+      // this->a = 10;  - blad!! w metodach statycznych 'this' nie istnieje!!
+    }
+};
+\end{lstlisting}
+\end{itemize}
+
+Statyczne zmienne globalne i statyczne funkcje są całkowicie niewidoczne i niedostępne dla nikogo, poza plikiem, w którym zostały zdefiniowane.
+
