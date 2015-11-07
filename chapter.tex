@@ -64,8 +64,37 @@ strcmp(s1, s2);
 /*Returns 0 if s1 and s2 are the same; less than 0 if s1<s2; greater than 0 if s1>s2*/
 \end{lstlisting}
 
-
-
-
+% ---------------------------------------------------------------------------------------------------------------
 
 \section{IT1A\_W03,IT1A\_U03,IT1A\_U07}dassdas
+
+% ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
+\textbf{W jaki sposób obliczyć długość tablicy w funkcji foo()?}
+\begin{lstlisting}[language=c]
+void foo(double t[]){
+   // dlugosc tablicy t?
+}
+\end{lstlisting}
+
+\subsection{Odpowiedź}
+\begin{itemize}
+\item W tym wypadku nie jest możliwe obliczenie długości tablicy.\\
+\end{itemize}
+
+\subsection{Wprowadzenie teoretyczne}
+Nie jest możliwe obliczenie długości tablicy posiadając jedynie wskaźnik do niej.\\
+Kompilator języka C potrafi obliczyć długość tablicy jeżeli została ona zadeklarowana w tej samej metodzie w której chcemy sprawdzić długość tablicy:
+\begin{lstlisting}[language=c]
+int array[] = { 1, 2, 3, 4 };
+int n = sizeof(array) / sizeof(array[0]);
+printf("Array has %d elements\n", n); /* it should returns 4 */
+
+foo(array);
+/*...*/
+void foo(int t[]){
+   int n = sizeof(t) / sizeof(t[0]);
+   printf("Array has %d elements\n", n); /* it shouldn't returns 4 */
+}
+\end{lstlisting}
