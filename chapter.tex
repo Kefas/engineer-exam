@@ -217,18 +217,15 @@ int main (){
 
 Modyfikator static sprawia, że obiekt w danej funkcji jest umieszczany w tej samej pamięci, co zmienna globalna i nie jest usuwany wraz z zakończeniem funkcji.
 \begin{lstlisting}[language=c]
-int licznik()
-{
+int licznik() {
   static int a;
   a++;
   return a;
 }
 
-int main()
-{
+int main() {
   printf("Wywoluje funkcje licznik %d", licznik());  /* wypisze sie 1 */
   printf("\n...drugi raz %d", licznik());     /* wypisze sie 2 */ 
-  //...
 }
 \end{lstlisting}
 
@@ -244,14 +241,12 @@ Pole statyczne klasy pamięta swoją wartość pomiędzy obiektami. Nie ważne z
 Metody statyczne - można wywołać bez podawania jakiegokolwiek obiektu. Ma to jednak swoją cenę - metody statyczne mają dostęp jedynie do innych zmiennych statycznych i metod statycznych tej klasy. 
 
 \begin{lstlisting}[language=c]
-class przyklad
-{
+class przyklad {
   private:
     int a, b;
     static int c;
   public:
-    static void metoda()
-    {
+    static void metoda() {
       c=10; 
       // b=10;     - blad! 'b' nie jest statyczne! nie ma do niego dostepu
       // this->a = 10;  - blad!! w metodach statycznych 'this' nie istnieje!!
