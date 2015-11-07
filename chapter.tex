@@ -98,3 +98,41 @@ void foo(int t[]){
    printf("Array has %d elements\n", n); /* it shouldn't returns 4 */
 }
 \end{lstlisting}
+
+% ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
+\textbf{Przeanalizuj poniższą deklarację w języku C}
+\begin{lstlisting}[language=c]
+int (*x)(int, int);
+\end{lstlisting}
+
+\subsection{Odpowiedź}
+\begin{itemize}
+\item Deklaracja wskaźnika na funkcję przyjmującą jako parametr dwa integery\\
+\end{itemize}
+
+\subsection{Wprowadzenie teoretyczne}
+\textbf{Wskaźniki na funkcje}\\
+Każda funkcja tak jak i zmienna ma swoje miejsce w pamięci do którego można przypisać wskaźnik.\\
+Wskaźnik na funkcje różni się od wskaźników na zmienne deklaracją:
+\begin{lstlisting}[language=c]
+typ_zwracanej_wartosci (*nazwa_wskaznika)(typ1 argument1, typ2 argument2, ...);
+\end{lstlisting}
+Przypisując nazwę funkcji bez nawiasów do wskaźnika automatycznie informujemy kompilator, że chodzi nam o adres funkcji.\\
+Wskaźnika używamy tak, jak normalnej funkcji, na którą on wskazuje.\\
+Przykład:
+\begin{lstlisting}[language=c]
+#include <stdio.h>
+
+int suma (int lhs, int rhs){
+   return lhs+rhs;
+}
+ 
+int main (){
+   int (*wsk_suma)(int a, int b);
+   wsk_suma = suma;
+   printf("4+5=%d\n", wsk_suma(4,5));
+   return 0;
+}
+\end{lstlisting}
