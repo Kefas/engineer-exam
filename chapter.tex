@@ -333,7 +333,7 @@ zwieksz_cpp(&i);
 
 % 15 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
-Przeanalizuj fragment kodu w języku C++, w którym pojawia się wywołanie operatora <<:
+\textbf{Przeanalizuj fragment kodu w języku C++, w którym pojawia się wywołanie operatora <<:}
 \begin{lstlisting}[language=c]
 A a;
 std::cout<<a;
@@ -371,3 +371,35 @@ Powyższa definicja fukncji przeładowującej jest niepoprawna:
 \item powinna zwracać ostream\&
 \item powinien zostać dodany drugi parametr metody, np: const Klasa\& k 
 \end{itemize}
+
+% 16 ---------------------------------------------------------------------------------------------------------------
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
+
+% 17 ---------------------------------------------------------------------------------------------------------------
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
+\textbf{Klasa B przechowuje wskaźniki do obiektów klasy A w kontenerze vector standardowej biblioteki C++ (STL)}
+\begin{lstlisting}[language=c]
+class A{...};
+class B{
+   public:
+   std::vector<A*> v;
+   void add(A &a) { v.push_back(new A(a));}
+   ~B();
+}
+\end{lstlisting}
+\textbf{Która z implementacji destruktora jest poprawna ( kompiluje się, nie prowadzi do błędów wykonania lub wycieków pamięci)?}
+
+\subsection{Odpowiedź}
+\begin{itemize}
+\item 
+\begin{lstlisting}[language=c]
+ B::~B(){
+    for ( std::vector<A*>::iterator i = v.begin(); i != v.end(); ++i )
+       delete *i; // wywolujemy delete na obiekcie, nie na wskazniku do niego!
+ }
+\end{lstlisting}
+\end{itemize}
+
+\subsection{Wprowadzenie teoretyczne}
+Dla każdego elementu w wektorze powinien zostać, wywołany operator delete. W szczególności używanie funkcji typu std::erase czy std::remove (i ich wariantów, typu std::remove\_if), czyszczenie pojemnika, itp. same nie dają poprawnego rozwiązania – na
+elementach musi byd jawnie wywołany operator delete, bo żadna z takich funkcji tego sama nie robi. Jeżeli mamy do czynienia z kontenerem obiektów ( czyli nie przechowujemy danych prymitywnych np. char lub wskaźników ) to możemy wywołać funkcję std::vector<T>::clear() która wywoła na każdym obiekcie operację delete.
