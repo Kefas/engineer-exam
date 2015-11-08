@@ -282,3 +282,47 @@ Jeżeli wewnątrz struktury przekazywanej przez wartość znajduje się wskaźni
 \item Przez referencję - na stos trafia kopia adresu przesyłanego paramteru. Zmieniając coś w referencji, zmieniamy oryginał.
 \end{itemize}
 
+% 13 ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U21} 
+\textbf{Które ze stwierdzeń, odnoszących się do referencji w języku C++ są poprawne?}
+
+\subsection{Wprowadzenie teoretyczne}
+Referencja w swym działaniu przypomina wskaźniki. Różnica polega jednak na tym, że do referencji można przypisać adres tylko raz ( w momencie deklaracji ), a jej dalsze używanie niczym się nie różni od używania zwykłej zmiennej. Operacje jakie wykona się na zmiennej referencyjnej, zostaną odzwierciedlone na zmiennej zwykłej, z której pobrano adres.\\
+Przykład użycia:
+\begin{lstlisting}[language=c]
+int i = 0;
+int &ref_i = i;
+cout << i;      // wypisze 0
+ref_i = 1;
+cout << i;      // wypisze 1
+cout << ref_i;  // wypisze 1
+\end{lstlisting}
+Różnice między wskaźnikami i referencjami:
+\begin{lstlisting}[language=c]
+int a,b;
+int *wsk_a = &a, *wsk_b = &b;
+int &ref_a = a, &ref_b = b;
+int &ref_c; // kompilator nie zezwoli na to - referencja niezainicjalizowana
+
+wsk_b = &a; // ok
+ref_b = &a; // tak sie nie da
+\end{lstlisting}
+W C++ można było przekazywać parametry do funkcji przez referencję w podobny sposób jak w C. W C++ jednak używa się referencji w o wiele prostszy sposób ( tak jak zwykły parametr ).
+\begin{lstlisting}[language=c]
+void zwieksz_c (int *i)
+{
+   ++(*i); // ta funkcja jest napisana w stylu C
+}
+void zwieksz_cpp (int& i)
+{
+   ++i; // ta funkcja wykorzystuje mozliwosci C++
+}
+
+// wywolanie funkcji niczym sie nie rozni.
+int i = 10;
+zwieksz_c(&i);
+zwieksz_cpp(&i);
+\end{lstlisting}
+
+
