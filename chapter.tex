@@ -401,5 +401,4 @@ class B{
 \end{itemize}
 
 \subsection{Wprowadzenie teoretyczne}
-Dla każdego elementu w wektorze powinien zostać, wywołany operator delete. W szczególności używanie funkcji typu std::erase czy std::remove (i ich wariantów, typu std::remove\_if), czyszczenie pojemnika, itp. same nie dają poprawnego rozwiązania – na
-elementach musi byd jawnie wywołany operator delete, bo żadna z takich funkcji tego sama nie robi. Jeżeli mamy do czynienia z kontenerem obiektów ( czyli nie przechowujemy danych prymitywnych np. char lub wskaźników ) to możemy wywołać funkcję std::vector<T>::clear() która wywoła na każdym obiekcie operację delete.
+Dla każdego elementu w wektorze powinien zostać, wywołany operator delete. W szczególności używanie funkcji typu std::erase czy std::remove (i ich wariantów, typu std::remove\_if), czyszczenie pojemnika, itp. same nie dają poprawnego rozwiązania – na elementach musi byd jawnie wywołany operator delete, bo żadna z takich funkcji tego sama nie robi. Jeżeli mamy do czynienia z kontenerem obiektów ( czyli nie przechowujemy danych prymitywnych np. char lub wskaźników ) to możemy wywołać funkcję std::vector<T>::clear() która wywoła na każdym obiekcie operację delete.
