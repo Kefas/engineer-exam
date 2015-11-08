@@ -358,18 +358,21 @@ ostream& operator<<(ostream& str, const Klasa& k) {
    return str << k.nazwa << " (" << k.nazwa2 << ")";
 }
 \end{lstlisting}
+\subsection{Odpowiedź}
+Według odpowiedzi z egzaminu 2011, poprawne były odpowiedzi dwie, w których operator był w osobnej funkcji
 
-\subsection{Komentarz do przykładowej odpowiedzi}
-\begin{lstlisting}[language=c]
-class A {
-   public:
-      void operator <<(std::ostream&os) const; 
-};
-\end{lstlisting}
-Powyższa definicja fukncji przeładowującej jest niepoprawna:
+% 19 ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21}
+\textbf{Które ze stwierdzeo odnoszących się do konstruktorów kopiujących i operatorów przypisania w języku C++ są poprawne?}
+
+\subsection{Wprowadzenie teoretyczne}
 \begin{itemize}
-\item powinna zwracać ostream\&
-\item powinien zostać dodany drugi parametr metody, np: const Klasa\& k 
+\item Publiczny konstruktor kopiujący oraz operator przypisania zostaną automatycznie wygenerowane przez kompilator, jeśli programista je pominie.
+\item Zarówno automatycznie wygenerowany konstruktor kopiujący, jak i operator przypisania kopiują obiekty bit po bicie.
+\item Inicjalizacja (tworzenie obiektu na zasadzie: X x = y;) wywołuje konstruktor kopiujący, nie operator przypisania.
+\item Oprócz inicjalizacji, konstruktor kopiujący wywoływany jest gdy przekazuje się lub zwraca obiekty przez wartośd (trzeba zrobid kopię obiektu).
+\item W niektórych przypadkach, jeśli kompilator jest sprytny i zrobi np. optymalizację wartości zwracanej, to konstruktor kopiujący może nie zostać wywołany przy wywołaniu funkcji zwracającej obiekt przez wartośd.
 \end{itemize}
 
 % 16 ---------------------------------------------------------------------------------------------------------------
