@@ -160,8 +160,9 @@ assuming that the address where structure begins is an even number */
     char Padding2[3]; /* 3 bytes to make total size of the structure 12 bytes */
 };
 \end{lstlisting}
-Wydawaćby się mogło, że sizeof(MixedData) = 9. Jednak nie - rozmiar struktury wynosi 12 bajtów! Do ostatniego elementu struktury dodany jest padding, dzięki któremu rozmiar struktury będzie wielokrotnością największego elementu struktury (tutaj int - 4 bajty). \\\\
-\textbf{Odpowiedź na pytanie} \\
+Wydawać by się mogło, że sizeof(MixedData) = 9. Jednak nie - rozmiar struktury wynosi 12 bajtów! Do ostatniego elementu struktury dodany jest padding, dzięki któremu rozmiar struktury będzie wielokrotnością największego elementu struktury (tutaj int - 4 bajty).
+
+\subsection{Odpowiedź na pytanie} 
 sizeof(x) = 1 + padding(1) + 2 + padding(4) + 8 = 16 
 
 % 6 ---------------------------------------------------------------------------------------------------------------
@@ -282,6 +283,9 @@ Jeżeli wewnątrz struktury przekazywanej przez wartość znajduje się wskaźni
 \item Przez referencję - na stos trafia kopia adresu przesyłanego paramteru. Zmieniając coś w referencji, zmieniamy oryginał.
 \end{itemize}
 
+% 12 ---------------------------------------------------------------------------------------------------------------
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
+
 % 13 ---------------------------------------------------------------------------------------------------------------
 
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U21} 
@@ -324,4 +328,46 @@ zwieksz_c(&i);
 zwieksz_cpp(&i);
 \end{lstlisting}
 
+% 14 ---------------------------------------------------------------------------------------------------------------
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
 
+% 15 ---------------------------------------------------------------------------------------------------------------
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
+Przeanalizuj fragment kodu w języku C++, w którym pojawia się wywołanie operatora <<:
+\begin{lstlisting}[language=c]
+A a;
+std::cout<<a;
+\end{lstlisting}
+Która z podanych implementacji operatora << jest poprawna (przykładowy kod zostanie skompilowany i wykonany)?
+
+\subsection{Wstęp teoretyczny}
+Aby przeładować operator << musimy zdefiniować funkcję o prototypie: 
+\begin{lstlisting}[language=c]
+ostream& operator<<(ostream&, const Klasa&);
+\end{lstlisting}
+Jeśli przy wypisywaniu informacji o obiekcie potrzebny jest dostęp do prywatnych lub chronionych składowych, to funkcję tę należy też zadeklarować jako zaprzyjaźnioną wewnątrz klasy:
+\begin{lstlisting}[language=c]
+class Klasa {
+  public:
+   friend ostream& operator<<(ostream&, const Klasa&);
+};
+\end{lstlisting}
+Przykład implementacji funkcji:
+\begin{lstlisting}[language=c]
+ostream& operator<<(ostream& str, const Klasa& k) {
+   return str << k.nazwa << " (" << k.nazwa2 << ")";
+}
+\end{lstlisting}
+
+\subsection{Komentarz do przykładowej odpowiedzi}
+\begin{lstlisting}[language=c]
+class A {
+   public:
+      void operator <<(std::ostream&os) const; 
+};
+\end{lstlisting}
+Powyższa definicja fukncji przeładowującej jest niepoprawna:
+\begin{itemize}
+\item powinna zwracać ostream\&
+\item powinien zostać dodany drugi parametr metody, np: const Klasa\& k 
+\end{itemize}
