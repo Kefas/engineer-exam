@@ -309,14 +309,13 @@ wsk_b = &a; // ok
 ref_b = &a; // tak sie nie da
 \end{lstlisting}
 W C++ można było przekazywać parametry do funkcji przez referencję w podobny sposób jak w C. W C++ jednak używa się referencji w o wiele prostszy sposób ( tak jak zwykły parametr ).
+
 \begin{lstlisting}[language=c]
-void zwieksz_c (int *i)
-{
+void zwieksz_c (int *i){
    ++(*i); // ta funkcja jest napisana w stylu C
 }
-void zwieksz_cpp (int& i)
-{
-   ++i; // ta funkcja wykorzystuje mozliwosci C++
+void zwieksz_cpp (int& i){
+   ++i;    // ta funkcja wykorzystuje mozliwosci C++
 }
 
 // wywolanie funkcji niczym sie nie rozni.
