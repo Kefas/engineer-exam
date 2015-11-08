@@ -361,20 +361,6 @@ ostream& operator<<(ostream& str, const Klasa& k) {
 \subsection{Odpowiedź}
 Według odpowiedzi z egzaminu 2011, poprawne były odpowiedzi dwie, w których operator był w osobnej funkcji
 
-% 19 ---------------------------------------------------------------------------------------------------------------
-
-\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21}
-\textbf{Które ze stwierdzeo odnoszących się do konstruktorów kopiujących i operatorów przypisania w języku C++ są poprawne?}
-
-\subsection{Wprowadzenie teoretyczne}
-\begin{itemize}
-\item Publiczny konstruktor kopiujący oraz operator przypisania zostaną automatycznie wygenerowane przez kompilator, jeśli programista je pominie.
-\item Zarówno automatycznie wygenerowany konstruktor kopiujący, jak i operator przypisania kopiują obiekty bit po bicie.
-\item Inicjalizacja (tworzenie obiektu na zasadzie: X x = y;) wywołuje konstruktor kopiujący, nie operator przypisania.
-\item Oprócz inicjalizacji, konstruktor kopiujący wywoływany jest gdy przekazuje się lub zwraca obiekty przez wartośd (trzeba zrobid kopię obiektu).
-\item W niektórych przypadkach, jeśli kompilator jest sprytny i zrobi np. optymalizację wartości zwracanej, to konstruktor kopiujący może nie zostać wywołany przy wywołaniu funkcji zwracającej obiekt przez wartośd.
-\end{itemize}
-
 % 16 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
 
@@ -405,3 +391,65 @@ class B{
 
 \subsection{Wprowadzenie teoretyczne}
 Dla każdego elementu w wektorze powinien zostać, wywołany operator delete. W szczególności używanie funkcji typu std::erase czy std::remove (i ich wariantów, typu std::remove\_if), czyszczenie pojemnika, itp. same nie dają poprawnego rozwiązania – na elementach musi byd jawnie wywołany operator delete, bo żadna z takich funkcji tego sama nie robi. Jeżeli mamy do czynienia z kontenerem obiektów ( czyli nie przechowujemy danych prymitywnych np. char lub wskaźników ) to możemy wywołać funkcję std::vector<T>::clear() która wywoła na każdym obiekcie operację delete.
+
+% 19 ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21}
+\textbf{Które ze stwierdzeń odnoszących się do konstruktorów kopiujących i operatorów przypisania w języku C++ są poprawne?}
+
+\subsection{Wprowadzenie teoretyczne}
+\begin{itemize}
+\item Publiczny konstruktor kopiujący oraz operator przypisania zostaną automatycznie wygenerowane przez kompilator, jeśli programista je pominie.
+\item Zarówno automatycznie wygenerowany konstruktor kopiujący, jak i operator przypisania kopiują obiekty bit po bicie.
+\item Inicjalizacja (tworzenie obiektu na zasadzie: X x = y;) wywołuje konstruktor kopiujący, nie operator przypisania.
+\item Oprócz inicjalizacji, konstruktor kopiujący wywoływany jest gdy przekazuje się lub zwraca obiekty przez wartośd (trzeba zrobid kopię obiektu).
+\item W niektórych przypadkach, jeśli kompilator jest sprytny i zrobi np. optymalizację wartości zwracanej, to konstruktor kopiujący może nie zostać wywołany przy wywołaniu funkcji zwracającej obiekt przez wartośd.
+\end{itemize}
+
+% 20 ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21}
+
+% 21 ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21}
+\textbf{W języku C++ dostep do informacji o typie obiektu w trakcie wykonania programu umożliwają następujące operatory:}
+
+\subsection{Odpowiedź}
+\begin{itemize}
+\item typeid
+\end{itemize}
+
+\subsection{Wprowadzenie teoretyczne}
+typeid jest funkcją która zwraca obiekt klasy std::type\_info lub wyrzucającą obiekt klasy std::bad\_typeid w przypadku gdy używamy tej funkcji z nullową wartością.\\
+Przykład:
+\begin{lstlisting}[language=c]
+#include <iostream>
+#include <typeinfo>  //for 'typeid' to work
+
+class Person {
+public:
+   // ... Person members ...
+   virtual ~Person() {}
+};
+
+class Employee : public Person {
+   // ... Employee members ...
+};
+
+int main () {
+   Person person;
+   Employee employee;
+   Person *ptr = &employee;
+   // The string returned by typeid::name is implementation-defined
+   
+   std::cout << typeid(person).name() << std::endl;   // Person
+   std::cout << typeid(employee).name() << std::endl; // Employee
+   std::cout << typeid(ptr).name() << std::endl;      // Person * 
+   std::cout << typeid(*ptr).name() << std::endl;     // Employee
+}
+\end{lstlisting}
+
+% 22 ---------------------------------------------------------------------------------------------------------------
+
+\section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21}
