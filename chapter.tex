@@ -290,6 +290,16 @@ Jeżeli wewnątrz struktury przekazywanej przez wartość znajduje się wskaźni
 
 % 12 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
+\textbf{Które stwierdzenia odnoszace sie do przydziału pamieci dla zmiennych w jezykach C i C++ sa prawdziwe?}
+
+\subsection{Wprowadzenie teoretyczne}
+
+\begin{itemize}
+\item Zmienne statyczne, automatyczne (zmienne globalne, statyczne, lokalne, niealokowane) przechowywane są na stosie
+\item Zmienne dynamiczne (alokowane poprzez malloc, new, itp.) przechowywane są na stercie
+\item Sterta jest wspólna dla wszytkich programów
+\item Stos jest ograniczony co do rozmiaru, co za tym idzie nie można na stosie zaalokowac dużej ilości pamięci należy to zrobić dynamicznie na stercie (to jest ta jedna z mistycznych sytuacji kiedy malloc zwraca null'a)
+\end{itemize}
 
 % 13 ---------------------------------------------------------------------------------------------------------------
 
