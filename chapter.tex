@@ -414,6 +414,117 @@ Dla każdego elementu w wektorze powinien zostać, wywołany operator delete. W 
 % 20 ---------------------------------------------------------------------------------------------------------------
 
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21}
+\textbf{Implementacja przeciazonych operatorów C++ powinna odzwierciedlac semantyke operacji na typach wbudowanych. Biorac pod uwage to wymaganie, które z implementacji operatorów dla klasy X zadeklarowanej ponizej jest poprawna? }
+\begin{lstlisting}[language=c]
+class X
+{
+friend X&operator+=(X&a, const X&b);
+	int x;
+public:
+	X(int _x=0):x(_x) {}
+	X&operator+(const X&o);
+	X&operator++(int);
+	X&operator-=(const X&o);
+};
+\end{lstlisting}
+
+\subsection{Wprowadzenie teoretyczne}
+
+Operatory można przeciążać na 2 sposoby:
+\begin{itemize}
+	\item definiując je jako metodę klasy
+	\item definiując je jako funkcję zewnętrzną poza klasą
+\end{itemize}
+	
+Dla przykładu przeładowanie operatora "+":\\
+W klasie:\\
+- zwracany\_typ operator+(const typ\_\&) const;\\
+Poza klasą:\\
+- zwracany\_typ operator+(const typ1\&, const typ2\&);\\
+
+Dla operatorów 1 argumentowych na przykładzie ++:\\
+W klasie:\\
+- zwracany\_typ\& operator++();\\
+Poza klasą:\\
+- zwracany\_typ\& operator++(typ\&);\\
+
+Teraz pewnie zadajecie sobie pytanie dobra no, ale jak to jest z tymi const. \\
+Jest to dość intuicyjne i trzeba się trzymać kilku zasad:
+\begin{itemize}
+	\item jeśli NIE zmieniamy jakiegoś parametru to dajemy przy nim const
+	\item jeśli przeładowujemy w klasie i operator nie zmienia klasy tylko zwraca nowy obiekt to na metodzie dajemy na koncu const
+\end{itemize}
+
+Dodatkowe pseudo reguły:
+\begin{itemize}
+	\item zazwyczaj wszytko przekazujemy jako referencję(\&) chyba że zwracamy nowy obiekt tak jak jest to w przypadku np. operatora +
+	\item operator można zdefiniować jako funkcje zaprzyjaźnioną żeby mieć dostęp z zewnątrz do prywatnych pól klasy trzeba tak zrobic np. w przypadku operatora wypisania, np.:
+		\begin{lstlisting}[language=c]
+	friend ostream& operator<< (ostream&,Foo const&);
+		\end{lstlisting}
+	\end{itemize}
+	
+Żywy przyklad mozna zobaczyc tutaj na klasie A.\\
+
+Co do przykladu z pytan:\\
+\begin{lstlisting}[language=c]
+class X
+{
+	friend X& operator+=(X &a, const X& b); /* Dobrze */
+	int x;
+	public:
+		X(int _x = 0) : x(_x) { }
+		X& operator+(const X&o);  /* Zle cala metoda powinna byc const */
+		X& operator++(int);       /* Dobrze, int i tak bedzie kopia w funkcji */
+		X& operator-=(const X&o); /* Dobrze */
+};
+\end{lstlisting}
+
+\subsection{Przykładowy kod}
+\begin{lstlisting}[language=c]
+class A {
+	
+	private:
+		int value;
+	
+	public:
+		
+		A(int value=0) {
+			this->value=value;
+		}
+		
+		int getValue(void) const {
+			return value;
+		}
+		
+		void setValue(int value) {
+			this->value=value;
+		}
+		
+		friend ostream& operator<<(ostream& out, A const& obj) {
+			out << obj.value;
+		}
+		
+		A operator+(A const& obj) const {
+			return A(value+obj.value);
+		}
+		
+		A& operator+=(A const& obj) {
+			value+=obj.value;
+		}
+		
+		bool operator<(A const& obj) const {
+			return value<obj.value;
+		}
+};
+
+int main(int argc, char** argv) {
+	
+	cout << A(1) << endl;
+	
+	return 0;
+}
+\end{lstlisting}
 
 % 21 ---------------------------------------------------------------------------------------------------------------
 
