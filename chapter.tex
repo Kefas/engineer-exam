@@ -173,6 +173,57 @@ sizeof(x) = 1 + padding(1) + 2 + padding(4) + 8 = 16
 % 6 ---------------------------------------------------------------------------------------------------------------
 
 \section{IT1A\_W03,IT1A\_U03,IT1A\_U07}
+\textbf{Przeanalizuj ponizsza deklaracje. Jakie wartosci wyrazen, w których wystepuja wskazniki p1 i p2 zostana wydrukowane? (Załóz, ze uzywasz 32-bitowego kompilatora.)}
+\begin{lstlisting}[language=c]
+int t[10];
+int *p1=&t[0];
+int *p2=&t[8];
+\end{lstlisting}
+
+\subsection{Wstęp teoretyczny}
+
+Tablica to tak naprawdę wskaźnik na blok pamięci, dlatego możemy zrobić tak:
+\begin{lstlisting}[language=c]
+int tab[10];
+int *tab2=tab;
+\end{lstlisting}
+
+Notacja t[x] to nic innego niż skrót na *(t+x), jak już wiemy t jest wskaźnikiem, a dodanie liczby do wskaźnika to przesunięcie wskazywanego miejsca o wielkość wskazywanego typu(np. jesli wskazuje na typ int to +1 przesunie go o sizeof(int))\\
+
+Tutaj podam kilka zalezności które są prawdziwe:\\
+Dla danych:
+\begin{lstlisting}[language=c]
+int t[10];
+int *tmp=t;
+int *p1=&t[0];
+int *p2=&t[8];
+\end{lstlisting}
+
+Prawdziwe jest:
+\begin{lstlisting}[language=c]
+t==&t[0]
+p1==t
+p2==(t+8)
+p2==(p1+8)
+\end{lstlisting}
+
+itp. itd.\\
+
+p1 jest wskaźnikiem na tablicę a p2 wskaźnikiem na 8 element tablicy.
+
+\subsection{Przykładowy kod}
+
+\begin{lstlisting}[language=c]
+int t[10];
+int *tmp=t;
+int *p1=&t[0];
+int *p2=&t[8];
+
+printf("t==&t[0]?: %d\n", t==&t[0]);
+printf("p1==t? : %d\n", p1==t);
+printf("p2==t+8? : %d\n", p2==(t+8));
+printf("p2==p1+8? : %d\n", p2==(p1+8));
+\end{lstlisting}
 
 % 7 ---------------------------------------------------------------------------------------------------------------
 
