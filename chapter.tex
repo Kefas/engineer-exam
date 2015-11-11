@@ -214,6 +214,47 @@ int main (){
 
 % 8 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
+\textbf{Które stwierdzenia dotyczace operatorów w jezyku C/C++ sa poprawne:}
+
+\subsection{Wprowadzenie teoretyczne}
+Chyba wszycy wiemy jak dziala pre i post inkrementacja, ale dla zasady
+zakladamy ze z zawsze jest rowne 0;
+\begin{lstlisting}[language=c]
+y=++z    /* y=1 z=1 */
+y=z++    /* y=0 z=1 */
+\end{lstlisting}
+
+Operatory += -= itp.:
+\begin{lstlisting}[language=c]
+z=0; y=0;
+y=z+=2;
+y==2 && z==2 /* true */
+\end{lstlisting}
+
+Działania jednoargumentowe:
+\begin{lstlisting}[language=c]
+z=1;
+-z==-1  /* true, ale po tej operacji z dalej jest rowne 1 */
++z==1   /* true ten operator tak naprawde nic nie zmienia,
+	bo nawet dla z=-1 otrzymamy -1, bo +(-1)==-1 */
+\end{lstlisting}
+
+\subsection{Przykładowy kod}
+
+\begin{lstlisting}[language=c]
+int z=1;
+int y=1;
+
+printf("z==++z?: %d\n", z==++z);
+printf("z!=z++?: %d\n", z==z++);
+z=0; y=0;
+y=z+=2;
+printf("z=0 y=0, y=z+=2, y==2 z==2?: %d\n", y==2 && z==2);
+z=1;
+printf("z=1,-z==-1:%d\n", -z == -1);
+printf("-z=%d\n", z);
+\end{lstlisting}
+
 % 9 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
 \textbf{Które stwierdzenia dotyczące modyfikatora static w języku C/C++ są poprawne}
