@@ -263,6 +263,64 @@ class przyklad {
 
 Statyczne zmienne globalne i statyczne funkcje są całkowicie niewidoczne i niedostępne dla nikogo, poza plikiem, w którym zostały zdefiniowane.
 
+% 10 ---------------------------------------------------------------------------------------------------------------
+\section{IT1A\_W03,IT1A\_U03,IT1A\_U07} 
+\textbf{Dzieki konwencji wywołania funkcji w jezyku C znanej jako \_\_cdecl mozliwa jest implementacja funkcji o zmiennej liczbie argumentów, jak printf(). Które stwierdzenia charakteryzujace funkcje typu \_\_cdecl sa prawdziwe?}
+
+\subsection{Wstęp teoretyczny}
+
+Patrząc z perspektywy programisty C:
+\begin{itemize}
+\item Wymagany jest chociaz jeden normalny parametr
+\item Musimy znać liczbę parametrów, np. przekazać jako normalny argument.(printf bierze ta informacje ze stringa z formatem)
+\item Argumenty moga byc dowolnego typu potem wyciagamy je makrem var\_arg
+\end{itemize}
+
+Z punktu widzenia Assemblera:
+\begin{itemize}
+\item Stos jest czyszczony przez obiekt wywołujący, a nie przez samą funkcję dzięki czemu możemy tworzyć funkcje ze zmienną ilością parametrów ponieważ obiekt wywołujący wie ile parametrów przekazał funkcji, a sama funkcja nie ma takiej informacji.
+\item Kod asemblera programu z funkcjami w konwencji \_\_cdecl jest wiekszy niż w przypadku innych konwencji ponieważ przy każdym wywołaniu funkcji na poziomie asemblera musi się znaleźć także wyczyzszczenie stosu z parametrów
+\end{itemize}
+
+Przykład konwencja stdcall(domyślna dla Win32):\\
+push 5	;wrzucamy argument na stos\\
+call potega	;wywołujemy funkcje\\
+
+Przykład konwencja cdecl:\\
+push 5	;wrzucamy argument na stos\\
+call potega	;wywołujemy funkcje\\
+add esp, 4	;sami czyścimy stos\\
+
+Jak widać w przypadku cdecl mamy o jedną instrukcje więcej.\\
+
+Istnieje jeszcze kilka innych konwencji wszystkie różnią się kodem assemblera.\\
+
+Jak wybrać ręcznie konwencję dla funkcji?\\
+\begin{lstlisting}[language=c]
+int __cdecl suma(int n, ...);
+int __stdcall suma(int a, ...);  /* Zapytacie jak to moze dzialac jak napisalem, 
+	ze tutaj funkcja sama czysci argumenty :D, 
+	Odpowiedz to: kompilator czaruje i generuje funkcje vararg w _cdecl */
+\end{lstlisting}
+
+Źródło: \href{http://www.p-programowanie.pl/cpp/konwencje-wywolywania-funkcji/}{http://www.p-programowanie.pl/cpp/konwencje-wywolywania-funkcji/}
+
+\subsection{Przykładowy kod}
+
+\begin{lstlisting}[language=c]
+printf("sum=%d\n", sum(4, 1, 2, 3, 4));
+
+int __cdecl sum(int n, ...) {
+	va_list ap;
+	va_start(ap, n);
+	int i=0;
+	int sum=0;
+	for(i=0; i<n; i++) sum+=va_arg(ap, int);
+	va_end(ap);
+	
+	return sum;
+}
+\end{lstlisting}
 
 % 11 ---------------------------------------------------------------------------------------------------------------
 
