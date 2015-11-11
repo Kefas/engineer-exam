@@ -335,6 +335,64 @@ zwieksz_cpp(&i);
 
 % 14 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
+\textbf{Jezeli podczas wykonania instrukcji w C++:}
+\begin{lstlisting}[language=c]
+A* ptr = new A();
+\end{lstlisting}
+\textbf{wygenerowany został wyjatek, jego przyczyna moze byc nastepujaca:}
+
+\subsection{Odpowiedź}
+Przychodzą mi do głowy 2 możliwości:
+\begin{itemize}
+\item W konstuktorze wyrzucany jest wyjątek
+\item Brakuje pamięci wtedy mechanizm C++ rzuca wyjątkiem std::bad\_alloc
+\end{itemize}
+
+\subsection{Przykładowy kod}
+\begin{lstlisting}[language=c]
+class Exception {
+	
+};
+
+class A {
+	private:
+		int i;
+	public:
+		A(bool a=false) {
+			if(a) throw Exception();
+		}
+		
+		~A() {
+			cout << "Descruting-A" << endl;
+		}
+		
+		int getI(void) {
+			return i;
+		}
+		void setI(int i) {
+			this->i=i;
+		}
+};
+
+int main(int argc, char** argv) {
+	A *a=NULL;
+	try {
+		A b;
+		a=new A(true);
+	} catch(Exception& e) {
+		cout << "Exception" << endl;
+		if(a==NULL) cout << "a-is-null" << endl;
+	}
+//	if(a==NULL) cout << "a-is-null";
+//	a->setI(10);
+//	cout << "Wartosc: " << a->getI() << endl;
+
+	delete a;
+	
+	return 0;
+}
+
+\end{lstlisting}
 
 % 15 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
