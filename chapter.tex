@@ -1051,3 +1051,80 @@ int main () {
 % 22 ---------------------------------------------------------------------------------------------------------------
 
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21}
+\textbf{Zadeklarowano dwie klasy w nastepujacy sposób:}
+\begin{lstlisting}[language=c]
+class A{
+public:
+	virtual void f(){printf("VA ");}
+	void g(){printf("A ");}
+};
+
+class B: public A{
+public:
+	void f(){printf("VB ");}
+	void g(){printf("B ");}
+};
+\end{lstlisting}
+\textbf{oraz utworzono dwa obiekty:}
+\begin{lstlisting}[language=c]
+A* a1 = new A();
+A* a2 = new B();
+\end{lstlisting}
+
+\subsection{Wprowadzenie teoretyczne}
+Wywołanie metody f na obu obiektach spowoduje wywołanie odpowiednich implementacji danej metody, poniewaz jest ona oznaczona jako wirtualna,
+czyli wypisze się "VA VB".\\
+
+Natomiast wywołanie metody g spowoduje wywołanie jedynie implementacji wypisującej "A ", ponieważ metoda nie jest wirtualna, a typ wskaźnika to A, czyli wywołanie:
+\begin{lstlisting}[language=c]
+a1->g();
+a2->g();
+\end{lstlisting}
+wypisze "B B".
+
+\textbf{Uwagi:}
+\begin{itemize}
+\item metody wirtualne wywoływane w konstruktorze zachowują się jak niewirtualne, czyli wywołają implementacje metody z danej klasy
+\item konstruktor jest tak jakby zawsze wirtualny
+\item destruktor powinien być ZAWSZE wirtualny. DLa przykłądu jeśli mamy takie dziedziczenie B dziedziczy po A to jeśli destruktor w klasie A będzie nie wierualny to nie wywoła sie destruktor klasy B - czytaj: bardzo źle :).
+\end{itemize}
+
+\subsection{Przykładowy kod}
+\begin{lstlisting}[language=c]
+class A {
+	public:
+		virtual void f() {cout << "VA ";}
+		void g() {cout << "A ";}
+};
+
+class B : public A {
+	public:
+		void f() {cout << "VB ";}
+		void g() {cout << "B ";}
+};
+
+class C : public B {
+	public:
+		void f() { cout << "VC "; }
+};
+
+int main(int argc, char** argv) {
+	A* a1=new A();
+	A* a2=new B();
+	B* a3=new C();
+	
+	a1->f();
+	a2->f();
+	a3->f();
+	
+	cout << endl;
+	
+	a1->g();
+	a2->g();
+	
+	delete a1;
+	delete a2;
+	
+	return 0;
+}
+\end{lstlisting}
