@@ -693,6 +693,84 @@ Według odpowiedzi z egzaminu 2011, poprawne były odpowiedzi dwie, w których o
 
 % 16 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
+\textbf{Zdefiniowano szablon (wzorzec) funkcji}
+\begin{lstlisting}[language=c]
+template<class T>
+T suma( T* table, int size)
+{
+	T t=T();
+	for(int i=0; i<size; i++) t+=table[i];
+	return t;
+}
+\end{lstlisting}
+\textbf{Proces instancjacji szablonu polega na zastapieniu typów i zmiennych bedacych parametrami szablonu konkretnymi typami i wartosciami, a nastepnie generacji kodu wynikowego. Jakie załozenia musi spełniac typ T, aby instancjacja szablonu była mozliwa?}
+\\
+Zeby mozna było wywołac szablon funkcji parametrem może być:
+\begin{itemize}
+\item typ prosty
+\item klasa która posiada domyślny konstruktor oraz przeciążony oprator+=
+\end{itemize}
+
+\begin{lstlisting}[language=c]
+class A {
+	
+	private:
+		int value;
+	
+	public:
+		
+		A(int value=0) {
+			this->value=value;
+		}
+		
+		int getValue(void) {
+			return value;
+		}
+		
+		void setValue(int value) {
+			this->value=value;
+		}
+		
+		friend ostream& operator<<(ostream& out, A const& obj) {
+			out << obj.value;
+		}
+		
+		A operator+(A const& obj) {
+			return A(value+obj.value);
+		}
+		
+		A& operator+=(A const& obj) {
+			value+=obj.value;
+		}
+};
+
+template<class T>
+T sum(T arg1, T arg2) {
+	return arg1+arg2;
+}
+
+template<class T>
+T suma(T *table, int size) {
+	T t=T();
+	for(int i=0; i<size;i++) t+=table[i];
+	return t;
+}
+
+int main(int argc, char** argv) {
+	A a(5),b(3);
+	A tab[]={A(1), A(2), A(3), A(4)};
+	
+	
+	cout << "Suma tablicy: " << suma(tab, 4) << endl;
+	
+	cout << sum(a, b) << endl;
+	cout << a << "+" << b << endl;
+	
+	cout << sum(1, 2) << " " << sum(1.0, 1.1) << endl;
+	
+	return 0;
+}
+\end{lstlisting}
 
 % 17 ---------------------------------------------------------------------------------------------------------------
 \section{IT1A\_W04,IT1A\_U04,IT1A\_U07,IT1A\_U21} 
